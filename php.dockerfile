@@ -7,9 +7,11 @@ RUN apk update && apk add --no-cache \
     freetype \
     libjpeg-turbo \
     libpng \
+    libzip \
     freetype-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    libzip-dev \
     libwebp-dev \
     linux-headers \
     $PHPIZE_DEPS
@@ -19,7 +21,7 @@ RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-webp
 
-RUN docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli
+RUN docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip
 
 RUN adduser -g ${PHPGROUP} -s /bin/sh -D ${PHPUSER}
 
