@@ -4,6 +4,7 @@ ENV PHPUSER=appuser
 ENV PHPGROUP=appuser
 
 RUN apk update && apk add --no-cache \
+    icu-dev \
     freetype \
     libjpeg-turbo \
     libpng \
@@ -21,7 +22,9 @@ RUN docker-php-ext-configure gd \
     --with-jpeg \
     --with-webp
 
-RUN docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip
+RUN docker-php-ext-configure intl
+
+RUN docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip intl
 
 RUN adduser -g ${PHPGROUP} -s /bin/sh -D ${PHPUSER}
 
