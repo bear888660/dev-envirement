@@ -15,7 +15,12 @@ RUN apk update && apk add --no-cache \
     libzip-dev \
     libwebp-dev \
     linux-headers \
-    $PHPIZE_DEPS
+    $PHPIZE_DEPS \
+    # Add these for gRPC
+    autoconf \
+    g++ \
+    make \
+    zlib-dev
 
 RUN docker-php-ext-configure gd \
     --with-freetype \
@@ -25,6 +30,10 @@ RUN docker-php-ext-configure gd \
 RUN docker-php-ext-configure intl
 
 RUN docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip intl
+
+# Install gRPC
+RUN pecl install grpc
+RUN docker-php-ext-enable grpc
 
 RUN adduser -g ${PHPGROUP} -s /bin/sh -D ${PHPUSER}
 
