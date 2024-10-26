@@ -40,6 +40,19 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+  
+  worker:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    volumes:
+       - ./src/cannan:/var/www/html/cannan
+    working_dir: /var/www/html/cannan
+    depends_on:
+      - mysql
+      - redis
+    entrypoint: ["php", "artisan", "queue:listen"]
+    command: ["--tries=3", "--queue=high,USPACE-LowPriority,default,USPACE-SUB", "--verbose"]
 
 volumes:
   mysql_data:
