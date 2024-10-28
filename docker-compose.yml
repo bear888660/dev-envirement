@@ -48,6 +48,7 @@ services:
     volumes:
        - ./src/cannan:/var/www/html/cannan
     working_dir: /var/www/html/cannan
+    restart: unless-stopped
     depends_on:
       - mysql
       - redis
