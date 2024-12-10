@@ -53,7 +53,7 @@ services:
       - mysql
       - redis
     entrypoint: ["php", "artisan", "queue:listen"]
-    command: ["--tries=3", "--queue=high,USPACE-LowPriority,default,USPACE-SUB", "--verbose"]
+    command: ["--tries=3", "--queue=high,USPACE-LowPriority,default,USPACE-SUB,USPACE-ERP", "--verbose"]
 
 volumes:
   mysql_data:

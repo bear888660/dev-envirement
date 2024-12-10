@@ -46,6 +46,9 @@ RUN docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip intl bcmath
 RUN pecl install grpc
 RUN docker-php-ext-enable grpc
 
+RUN pecl install opencensus-alpha
+RUN docker-php-ext-enable opencensus
+
 # Copy needed wkhtmltopdf files from wkhtmltopdf image
 COPY --from=wkhtmltopdf /bin/wkhtmltoimage /bin/wkhtmltopdf /bin/libwkhtmltox* /bin/
 
